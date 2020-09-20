@@ -1,0 +1,5 @@
+#no IDE metafiles
+.idea/
+
+#no venv
+TwitterStreamer/venv/
