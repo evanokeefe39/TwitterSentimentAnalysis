@@ -7,7 +7,12 @@ from elasticsearch import Elasticsearch
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+from datetime import datetime
 
+
+
+
+#todo: set up index with correct types before running script
 
 #make sure es01 is available and connect
 retry_strategy = Retry(
@@ -20,8 +25,8 @@ adapter = HTTPAdapter(max_retries=retry_strategy)
 http = requests.Session()
 http.mount("https://", adapter)
 http.mount("http://", adapter)
-print("connecting...")
 
+print("connecting...")
 
 res = http.get('http://es01:9200')
 print("connection to es01 success!")
@@ -62,12 +67,16 @@ class TweetStreamListener(StreamListener):
         # output sentiment
         print(sentiment)
 
+        #fix date format since elasticsearch doesn't automatically recognise twitter dtime format
+        dtime = dict_data["created_at"]
+        new_datetime = datetime.strftime(datetime.strptime(dtime, '%a %b %d %H:%M:%S +0000 %Y'), '%Y-%m-%dT%H:%M:%SZ')
+
         # add text and sentiment info to elasticsearch
         es.index(index="sentiment",
-                 doc_type="test-type",
+                 doc_type="_doc",
                  body={"author": dict_data["user"]["screen_name"],
-                       "date": dict_data["created_at"],
-                       "message": dict_data["text"],
+                       "date": new_datetime,
+                       "message": dict_data["text"], #todo: need to update type mapping for this to include tag for "field data" so it can be used in tag cloud viz
                        "polarity": tweet.sentiment.polarity,
                        "subjectivity": tweet.sentiment.subjectivity,
                        "sentiment": sentiment})
