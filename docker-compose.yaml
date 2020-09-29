@@ -2,6 +2,7 @@ version: '3.8'
 services:
   twitstream:
     build: ./TwitterStreamer
+    restart: unless-stopped
     depends_on:
       - es01
       - kib01

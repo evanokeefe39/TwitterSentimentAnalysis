@@ -4,33 +4,32 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from textblob import TextBlob
 from elasticsearch import Elasticsearch
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+#import requests
+#from requests.adapters import HTTPAdapter
+#from requests.packages.urllib3.util.retry import Retry
 from datetime import datetime
-
-
 
 
 #todo: set up index with correct types before running script
 
-#make sure es01 is available and connect
-retry_strategy = Retry(
-    total=10,
-    status_forcelist=[413, 429, 500, 502, 503, 504],
-    method_whitelist=["HEAD", "GET", "PUT", "DELETE", "OPTIONS", "TRACE"],
-    backoff_factor=1.5
-)
-adapter = HTTPAdapter(max_retries=retry_strategy)
-http = requests.Session()
-http.mount("https://", adapter)
-http.mount("http://", adapter)
+#Can use a retry strategy instead of whole container retry.
 
-print("connecting...")
+# retry_strategy = Retry(
+#     total=10,
+#     status_forcelist=[413, 429, 500, 502, 503, 504],
+#     method_whitelist=["HEAD", "GET", "PUT", "DELETE", "OPTIONS", "TRACE"],
+#     backoff_factor=1.5
+# )
+# adapter = HTTPAdapter(max_retries=retry_strategy)
+# http = requests.Session()
+# http.mount("https://", adapter)
+# http.mount("http://", adapter)
 
-res = http.get('http://es01:9200')
-print("connection to es01 success!")
-print(res.content)
+# print("connecting...")
+
+# res = http.get('http://es01:9200')
+#print("connection to es01 success!")
+# print(res.content)
 
 # import twitter keys and tokens
 consumer_key = 'GAuhgCwp66h47GODiGzjIQ12T'
@@ -41,6 +40,8 @@ access_token_secret = 'mD2KC3NIYR7Sv6ntTIAuuUrM0cbgtHPFbUnfGR4UNIVln'
 #create instance of elasticsearch
 
 es = Elasticsearch([{'host': 'es01', 'port': 9200}] )
+
+print("connection to es01 success!")
 
 class TweetStreamListener(StreamListener):
 
