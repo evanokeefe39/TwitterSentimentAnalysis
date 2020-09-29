@@ -32,10 +32,11 @@ from datetime import datetime
 # print(res.content)
 
 # import twitter keys and tokens
-consumer_key = 'GAuhgCwp66h47GODiGzjIQ12T'
-consumer_secret = 'FHlGxH7lItMuXHjPy8iITGRbDSBEbKBfFfVl4bHA8GhCYFgNLU'
-access_token = '837530140900917248-9kxxjywK8ZocEGAImeabHINI06nH8Xf'
-access_token_secret = 'mD2KC3NIYR7Sv6ntTIAuuUrM0cbgtHPFbUnfGR4UNIVln'
+consumer_key = 'Your consumer key here'
+consumer_secret = 'Your consumer secret here'
+access_token = 'Your access token here'
+access_token_secret = 'Your access token secret here'
+
 
 #create instance of elasticsearch
 
