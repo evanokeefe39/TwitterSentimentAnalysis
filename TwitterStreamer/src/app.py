@@ -1,4 +1,5 @@
 import json
+import os
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
@@ -32,10 +33,10 @@ from datetime import datetime
 # print(res.content)
 
 # import twitter keys and tokens
-consumer_key = 'Your consumer key here'
-consumer_secret = 'Your consumer secret here'
-access_token = 'Your access token here'
-access_token_secret = 'Your access token secret here'
+consumer_key = os.environ['CONSUMER_KEY']
+consumer_secret = os.environ['CONSUMER_SECRET']
+access_token = os.environ['ACCESS_TOKEN']
+access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 
 
 #create instance of elasticsearch
