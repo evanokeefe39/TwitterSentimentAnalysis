@@ -41,7 +41,7 @@ access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 
 #create instance of elasticsearch
 
-es = Elasticsearch([{'host': 'es01', 'port': 9200}] )
+es = Elasticsearch([{'host': 'quickstart-es-http', 'port': 9200}] )
 
 print("connection to es01 success!")
 
