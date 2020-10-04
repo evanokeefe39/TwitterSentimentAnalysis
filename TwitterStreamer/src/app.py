@@ -37,11 +37,15 @@ consumer_key = os.environ['CONSUMER_KEY']
 consumer_secret = os.environ['CONSUMER_SECRET']
 access_token = os.environ['ACCESS_TOKEN']
 access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
+secret_es = os.environ['SECRET_ES']
 
-
+print(secret_es)
 #create instance of elasticsearch
 
-es = Elasticsearch([{'host': 'quickstart-es-http', 'port': 9200}] )
+#es = Elasticsearch([{'host': 'quickstart-es-http', 'port': 9200}] )
+es = Elasticsearch([
+    'https://elastic:'+secret_es+'@quickstart-es-http:9200'
+], verify_certs=False )
 
 print("connection to es01 success!")
 

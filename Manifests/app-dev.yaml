@@ -1,0 +1,80 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "app-config-wquq"
+  namespace: "default"
+  labels:
+    app: "app"
+data:
+  CONSUMER_KEY: "5dT9nvqRdK0vp8KizeQLkf8wh"
+  CONSUMER_SECRET: "dIsqokBz0UQlDKRbtYpPYJL8dKuwDEmB8gFsXyhQSSD8YgsMyZ"
+  ACCESS_TOKEN: "837530140900917248-MOrNjTzuenDr8wzmpXMHj4BmD1V8hLI"
+  ACCESS_TOKEN_SECRET: "8jLoeI9rfworb35xsTzvGg2VBDf1cPp3PeNZKPQGAHt79"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "app"
+  namespace: "default"
+  labels:
+    app: "app"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "app"
+  template:
+    metadata:
+      labels:
+        app: "app"
+    spec:
+      containers:
+      - name: "twitstream-1"
+        image: "gcr.io/pro-sylph-290914/twitstream:v5"
+        env:
+        - name: SECRET_ES
+          valueFrom:
+            secretKeyRef:
+              name: quickstart-es-elastic-user
+              key: elastic
+        - name: "CONSUMER_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "CONSUMER_KEY"
+              name: "app-config-wquq"
+        - name: "CONSUMER_SECRET"
+          valueFrom:
+            configMapKeyRef:
+              key: "CONSUMER_SECRET"
+              name: "app-config-wquq"
+        - name: "ACCESS_TOKEN"
+          valueFrom:
+            configMapKeyRef:
+              key: "ACCESS_TOKEN"
+              name: "app-config-wquq"
+        - name: "ACCESS_TOKEN_SECRET"
+          valueFrom:
+            configMapKeyRef:
+              key: "ACCESS_TOKEN_SECRET"
+              name: "app-config-wquq"
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "app-hpa-ehzd"
+  namespace: "default"
+  labels:
+    app: "app"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "app"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80
