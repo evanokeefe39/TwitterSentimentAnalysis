@@ -26,7 +26,7 @@
 * [Docker for Desktop](https://www.docker.com/products/docker-desktop)
 * [Cloude Code](https://cloud.google.com/code)
 
-<br />
+
 
 [![Product Name Screen Shot][product-screenshot]](https://medium.com/@twentyfoursevenevan)
 <!-- GETTING STARTED -->
@@ -89,4 +89,4 @@ Evan O'Keefe  - evan.okeefe39@gmail.com
 
 * [Real Python - Twitter Sentiment Analysis – Python, Docker, Elasticsearch, Kibana](https://realpython.com/twitter-sentiment-python-docker-elasticsearch-kibana/)
 
-[product-screenshot]: images/demo.png
+[product-screenshot]: images/demo.PNG
