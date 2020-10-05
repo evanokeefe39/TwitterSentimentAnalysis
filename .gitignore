@@ -1,10 +1,6 @@
 #no IDE metafiles
 .idea/
 .vscode/
-commands.md
 
 #no venv
 TwitterStreamer/venv/
-
-#no secrets
-.env

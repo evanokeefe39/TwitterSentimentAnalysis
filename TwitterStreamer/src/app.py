@@ -5,32 +5,8 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from textblob import TextBlob
 from elasticsearch import Elasticsearch
-#import requests
-#from requests.adapters import HTTPAdapter
-#from requests.packages.urllib3.util.retry import Retry
 from datetime import datetime
 
-
-#todo: set up index with correct types before running script
-
-#Can use a retry strategy instead of whole container retry.
-
-# retry_strategy = Retry(
-#     total=10,
-#     status_forcelist=[413, 429, 500, 502, 503, 504],
-#     method_whitelist=["HEAD", "GET", "PUT", "DELETE", "OPTIONS", "TRACE"],
-#     backoff_factor=1.5
-# )
-# adapter = HTTPAdapter(max_retries=retry_strategy)
-# http = requests.Session()
-# http.mount("https://", adapter)
-# http.mount("http://", adapter)
-
-# print("connecting...")
-
-# res = http.get('http://es01:9200')
-#print("connection to es01 success!")
-# print(res.content)
 
 # import twitter keys and tokens
 consumer_key = os.environ['CONSUMER_KEY']
@@ -39,15 +15,15 @@ access_token = os.environ['ACCESS_TOKEN']
 access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 secret_es = os.environ['SECRET_ES']
 
-print(secret_es)
-#create instance of elasticsearch
+#create instance of elasticsearch for local docker stack
 
-#es = Elasticsearch([{'host': 'quickstart-es-http', 'port': 9200}] )
-es = Elasticsearch([
-    'https://elastic:'+secret_es+'@quickstart-es-http:9200'
-], verify_certs=False )
+#es = Elasticsearch([{'host': 'localhost', 'port': 9200}] )
 
-print("connection to es01 success!")
+#create instance of elasticsearch for kubernetes cluster
+# es = Elasticsearch([
+#     'https://elastic:'+secret_es+'@quickstart-es-http:9200'
+# ], verify_certs=False )
+
 
 class TweetStreamListener(StreamListener):
 
@@ -95,7 +71,7 @@ class TweetStreamListener(StreamListener):
 
 
 if __name__ == '__main__':
-    print("main...")
+    print("Initializing...")
     # create instance of the tweepy tweet stream listener
     listener = TweetStreamListener()
 
@@ -106,5 +82,6 @@ if __name__ == '__main__':
     # create instance of the tweepy stream
     stream = Stream(auth, listener)
 
+    print("Start streaming...")
     # search twitter for "congress" keyword
     stream.filter(track=['tesla', 'elon musk', 'tsla', 'tesla stock', 'tesla model', 'tesla price', 'cybertruck', 'gigafactory'])
