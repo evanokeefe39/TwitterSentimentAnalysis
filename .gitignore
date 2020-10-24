@@ -4,3 +4,6 @@
 
 #no venv
 TwitterStreamer/venv/
+
+#no images
+images/cover.png
