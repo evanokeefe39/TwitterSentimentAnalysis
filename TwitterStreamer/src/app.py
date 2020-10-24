@@ -13,7 +13,7 @@ consumer_key = os.environ['CONSUMER_KEY']
 consumer_secret = os.environ['CONSUMER_SECRET']
 access_token = os.environ['ACCESS_TOKEN']
 access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
-secret_es = os.environ['SECRET_ES']
+
 
 #create instance of elasticsearch for local docker stack
 
@@ -21,7 +21,8 @@ es = Elasticsearch([{'host': 'localhost', 'port': 9200}] )
 
 #create instance of elasticsearch for kubernetes cluster
 
-# es = Elasticsearch([
+#secret_es = os.environ['SECRET_ES']
+#es = Elasticsearch([
 #     'https://elastic:'+secret_es+'@quickstart-es-http:9200'
 # ], verify_certs=False )
 
